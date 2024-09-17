@@ -1,0 +1,1 @@
+// Gelen datayı filtreleme
