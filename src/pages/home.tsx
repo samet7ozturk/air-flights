@@ -29,7 +29,7 @@ const Home = () => {
             </div>
             <div className="flex items-center gap-1">
               <CgProfile />
-              <Link to="/my-fligths">
+              <Link to="/my-flights">
                 <p>My Tickets</p>
               </Link>
             </div>
