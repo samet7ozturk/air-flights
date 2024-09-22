@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// Güncellenmiş Flight arayüzü
 interface Flight {
   lastUpdatedAt: string;
   actualLandingTime: string;
@@ -60,6 +59,7 @@ const flightsSlice = createSlice({
     fetchFlightsStart(state) {
       state.loading = true;
       state.error = null;
+      state.flights = [];
     },
     fetchFlightsSuccess(state, action: PayloadAction<Flight[]>) {
       state.loading = false;
