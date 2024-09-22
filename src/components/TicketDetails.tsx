@@ -8,7 +8,7 @@ import modalStyles from "../styles/modal";
 import { FaPlane, FaPlaneDeparture, FaPlaneArrival } from "react-icons/fa";
 
 const TicketDetails = () => {
-  const { flights, loading, error } = useSelector(
+  const { flights, stopsFilter, loading, error } = useSelector(
     (state: RootState) => state.flights
   );
 
@@ -44,6 +44,16 @@ const TicketDetails = () => {
     }
   };
 
+  const filterFlights = flights.filter((flight) => {
+    const stopsCount = flight.route.destinations.length - 1;
+
+    if (stopsFilter.includes("Nonstop") && stopsCount === 0) return true;
+    if (stopsFilter.includes("1 stop") && stopsCount === 1) return true;
+    if (stopsFilter.includes("2+ stops") && stopsCount >= 2) return true;
+
+    return stopsFilter.length === 0;
+  });
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -58,7 +68,7 @@ const TicketDetails = () => {
 
   return (
     <div className="mb-6">
-      {flights.map((flight, index) => {
+      {filterFlights.map((flight, index) => {
         const stopsCount = flight.route.destinations.length - 1;
         const stopText =
           stopsCount === 0
@@ -108,7 +118,13 @@ const TicketDetails = () => {
                   <FaPlaneArrival />
                   <p>Arrival</p>
                 </div>
-                <p className="font-bold">{flight.estimatedLandingTime}</p>
+                <p className="font-bold">
+                  {flight.estimatedLandingTime
+                    ? new Date(flight.estimatedLandingTime)
+                        .toISOString()
+                        .split("T")[0]
+                    : "Unknown Arrival Date"}
+                </p>
                 <p>Airport: {arrivalAirport}</p>
               </div>
             </div>

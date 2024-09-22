@@ -42,12 +42,14 @@ export interface Flight {
 
 interface FlightsState {
   flights: Flight[];
+  stopsFilter: string[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: FlightsState = {
   flights: [],
+  stopsFilter: [],
   loading: false,
   error: null,
 };
@@ -69,9 +71,16 @@ const flightsSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    setStopsFilter: (state, action: PayloadAction<string[]>) => {
+      state.stopsFilter = action.payload;
+    },
   },
 });
 
-export const { fetchFlightsStart, fetchFlightsSuccess, fetchFlightsFailure } =
-  flightsSlice.actions;
+export const {
+  fetchFlightsStart,
+  fetchFlightsSuccess,
+  fetchFlightsFailure,
+  setStopsFilter,
+} = flightsSlice.actions;
 export default flightsSlice.reducer;

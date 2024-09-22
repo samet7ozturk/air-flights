@@ -2,20 +2,34 @@ import { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAirlinesThunk } from "../store/thunks/airlinesThunk";
+import { setStopsFilter } from "../store/slices/flightsSlice";
 
 export default function FilterOptions() {
   const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    dispatch(fetchAirlinesThunk());
-  }, [dispatch]);
-
   const { airlines, loading, error } = useSelector(
     (state: RootState) => state.airlines
   );
-  console.log("Filter Options Component: ", airlines);
 
+  const [selectedStops, setSelectedStops] = useState<string[]>(["Nonstop"]);
   const [selectedTime, setSelectedTime] = useState("morning");
+
+  const handleStopsChange = (stopType: string) => {
+    let updatedStops = [...selectedStops];
+
+    if (updatedStops.includes(stopType)) {
+      updatedStops = updatedStops.filter((stop) => stop !== stopType);
+    } else {
+      updatedStops.push(stopType);
+    }
+
+    setSelectedStops(updatedStops);
+    dispatch(setStopsFilter(updatedStops));
+  };
+
+  useEffect(() => {
+    dispatch(fetchAirlinesThunk());
+  }, [dispatch]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -67,7 +81,9 @@ export default function FilterOptions() {
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
-            name="agree"
+            name="nonstop"
+            checked={selectedStops.includes("Nonstop")}
+            onChange={() => handleStopsChange("Nonstop")}
             className="appearance-none h-4 w-4 border-2 border-gray-300 rounded-full checked:bg-[#4a0097] checked:border-transparent"
           />
           Nonstop
@@ -75,7 +91,9 @@ export default function FilterOptions() {
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
-            name="agree"
+            name="1 stop"
+            checked={selectedStops.includes("1 stop")}
+            onChange={() => handleStopsChange("1 stop")}
             className="appearance-none h-4 w-4 border-2 border-gray-300 rounded-full checked:bg-[#4a0097] checked:border-transparent"
           />
           1 Stop
@@ -83,7 +101,9 @@ export default function FilterOptions() {
         <label className="flex items-center gap-2">
           <input
             type="checkbox"
-            name="agree"
+            name="2+ Stops"
+            checked={selectedStops.includes("2+ stops")}
+            onChange={() => handleStopsChange("2+ stops")}
             className="appearance-none h-4 w-4 border-2 border-gray-300 rounded-full checked:bg-[#4a0097] checked:border-transparent"
           />
           2+ Stops
