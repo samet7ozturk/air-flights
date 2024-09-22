@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Flight {
+export interface Flight {
   lastUpdatedAt: string;
   actualLandingTime: string;
   aircraftType: {
