@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import flightsReducer from "./slices/flightsSlice";
 import airlinesReducer from "./slices/airlinesSlice";
+import reservationsSlice from "./slices/reservationsSlice";
 
 export const store = configureStore({
   reducer: {
     flights: flightsReducer,
     airlines: airlinesReducer,
+    reservations: reservationsSlice,
   },
 });
 
