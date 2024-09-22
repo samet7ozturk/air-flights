@@ -38,11 +38,13 @@ export interface Flight {
   serviceType: string;
   terminal: number;
   schemaVersion: string;
+  price: number;
 }
 
 interface FlightsState {
   flights: Flight[];
   stopsFilter: string[];
+  sortOption: string;
   loading: boolean;
   error: string | null;
 }
@@ -50,6 +52,7 @@ interface FlightsState {
 const initialState: FlightsState = {
   flights: [],
   stopsFilter: [],
+  sortOption: "lowest",
   loading: false,
   error: null,
 };
@@ -71,8 +74,11 @@ const flightsSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    setStopsFilter: (state, action: PayloadAction<string[]>) => {
+    setStopsFilter(state, action: PayloadAction<string[]>) {
       state.stopsFilter = action.payload;
+    },
+    setSortOption(state, action: PayloadAction<string>) {
+      state.sortOption = action.payload;
     },
   },
 });
@@ -82,5 +88,6 @@ export const {
   fetchFlightsSuccess,
   fetchFlightsFailure,
   setStopsFilter,
+  setSortOption,
 } = flightsSlice.actions;
 export default flightsSlice.reducer;

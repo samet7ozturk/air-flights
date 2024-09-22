@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAirlinesThunk } from "../store/thunks/airlinesThunk";
-import { setStopsFilter } from "../store/slices/flightsSlice";
+import { setSortOption, setStopsFilter } from "../store/slices/flightsSlice";
 
 export default function FilterOptions() {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,6 +27,10 @@ export default function FilterOptions() {
     dispatch(setStopsFilter(updatedStops));
   };
 
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setSortOption(e.target.value));
+  };
+
   useEffect(() => {
     dispatch(fetchAirlinesThunk());
   }, [dispatch]);
@@ -43,10 +47,9 @@ export default function FilterOptions() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-2">
         <p className="font-bold">Sort by:</p>
-        <select className="w-full rounded-md p-1">
+        <select onChange={handleSortChange} className="w-full rounded-md p-1">
           <option value="lowest">Lowest Price</option>
           <option value="highest">Highest Price</option>
-          <option value="newest">Newest</option>
         </select>
       </div>
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { Flight } from "../store/slices/flightsSlice";
@@ -8,11 +8,14 @@ import modalStyles from "../styles/modal";
 import { FaPlane, FaPlaneDeparture, FaPlaneArrival } from "react-icons/fa";
 
 const TicketDetails = () => {
-  const { flights, stopsFilter, loading, error } = useSelector(
+  const { flights, stopsFilter, sortOption, loading, error } = useSelector(
     (state: RootState) => state.flights
   );
 
   const [selectedFlight, setSelectedFlight] = useState<Flight | null>(null);
+  const [flightPrices, setFlightPrices] = useState<{ [key: string]: number }>(
+    {}
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (flight: Flight) => {
@@ -54,6 +57,30 @@ const TicketDetails = () => {
     return stopsFilter.length === 0;
   });
 
+  const sortedFlights = [...filterFlights].sort((a, b) => {
+    const priceA = flightPrices[a.flightNumber];
+    const priceB = flightPrices[b.flightNumber];
+
+    return sortOption === "lowest" ? priceA - priceB : priceB - priceA;
+  });
+
+  const getRandomPrice = () => {
+    return Math.floor(Math.random() * (800 - 200 + 1)) + 200;
+  };
+
+  useEffect(() => {
+    const prices: { [key: string]: number } = {};
+    flights.forEach((flight) => {
+      prices[flight.flightNumber] = getRandomPrice();
+    });
+    setFlightPrices(prices);
+  }, [flights]);
+
+  useEffect(() => {
+    // Modal için gerekli elementin belirlenmesi
+    Modal.setAppElement("#root");
+  }, []);
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -68,7 +95,7 @@ const TicketDetails = () => {
 
   return (
     <div className="mb-6">
-      {filterFlights.map((flight, index) => {
+      {sortedFlights.map((flight, index) => {
         const stopsCount = flight.route.destinations.length - 1;
         const stopText =
           stopsCount === 0
@@ -79,6 +106,8 @@ const TicketDetails = () => {
 
         const arrivalAirport =
           flight.route.destinations[flight.route.destinations.length - 1];
+
+        const flightPrice = flightPrices[flight.flightNumber];
 
         return (
           <div
@@ -131,7 +160,9 @@ const TicketDetails = () => {
 
             <div className="flex justify-between">
               <div>
-                <p className="font-bold text-[#4a0097]">Price: $200</p>
+                <p className="font-bold text-[#4a0097]">
+                  Price: {flightPrice}$
+                </p>
                 <p>Round Trip</p>
               </div>
               <button
@@ -145,7 +176,7 @@ const TicketDetails = () => {
             <div className="absolute bottom-[-48px] left-0 w-fit text-[#4a0097]">
               <p
                 className="bg-[#e6e0eb] rounded-b-lg p-3 underline underline-offset-2 hover:cursor-pointer"
-                onClick={() => openModal(flight)}
+                onClick={() => openModal({ ...flight, price: flightPrice })}
               >
                 Check the details
               </p>
@@ -166,6 +197,7 @@ const TicketDetails = () => {
             <p>Flight Number: {selectedFlight.flightNumber}</p>
             <p>Departure: {selectedFlight.scheduleDateTime}</p>
             <p>Arrival: {selectedFlight.estimatedLandingTime}</p>
+            <p>Price: {selectedFlight.price}$</p>
             <button onClick={closeModal}>Close</button>
           </div>
         )}
