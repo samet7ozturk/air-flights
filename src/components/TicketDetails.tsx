@@ -18,6 +18,7 @@ const TicketDetails = () => {
   const [flightPrices, setFlightPrices] = useState<{ [key: string]: number }>(
     {}
   );
+  const [availableFlights, setAvailableFlights] = useState<Flight[]>(flights);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (flight: Flight) => {
@@ -32,9 +33,12 @@ const TicketDetails = () => {
 
   const bookFlight = (flightNumber: number) => {
     dispatch(bookFlightThunk(flightNumber));
+    setAvailableFlights((prevFlights) =>
+      prevFlights.filter((flight) => flight.flightNumber !== flightNumber)
+    );
   };
 
-  const filterFlights = flights.filter((flight) => {
+  const filterFlights = availableFlights.filter((flight) => {
     const stopsCount = flight.route.destinations.length - 1;
 
     if (stopsFilter.includes("Nonstop") && stopsCount === 0) return true;
@@ -61,10 +65,10 @@ const TicketDetails = () => {
       prices[flight.flightNumber] = getRandomPrice();
     });
     setFlightPrices(prices);
+    setAvailableFlights(flights);
   }, [flights]);
 
   useEffect(() => {
-    // Modal için gerekli elementin belirlenmesi
     Modal.setAppElement("#root");
   }, []);
 
@@ -99,19 +103,19 @@ const TicketDetails = () => {
         return (
           <div
             key={index}
-            className="relative flex flex-col bg-white rounded-xl rounded-bl-none p-6 mb-20"
+            className="relative flex flex-col bg-white rounded-xl rounded-bl-none p-6 mb-20 animate-slider1 hover:scale-115 transition-transform duration-300"
           >
             <div>
               <p className="font-bold">Milano - Madrid</p>
             </div>
 
             <div className="flex justify-between items-center">
-              <div>
+              <div className="w-[10%]">
                 <div>
                   <FaPlaneDeparture />
                   <p>Departure</p>
                 </div>
-                <p className="font-bold">7:30 AM</p>
+                <p className="font-bold">7:40 AM</p>
                 <p>Airport: MXP</p>
               </div>
 
@@ -122,14 +126,14 @@ const TicketDetails = () => {
               <div className="flex flex-col items-center">
                 <p>{flight.prefixIATA}</p>
                 <FaPlane className="text-[#4a0097]" />
-                <p>{stopText}</p>
+                <p>1h 32m ({stopText})</p>
               </div>
 
               <div className="w-[10%]">
                 <hr className="border-none p-[2px] bg-gray-400 rounded-md" />
               </div>
 
-              <div>
+              <div className="w-[10%]">
                 <div>
                   <FaPlaneArrival />
                   <p>Arrival</p>
