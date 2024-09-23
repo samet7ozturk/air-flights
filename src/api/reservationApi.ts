@@ -13,6 +13,7 @@ export const fetchReservations = async () => {
 
 export const postReservations = async (body: any) => {
   try {
+    console.info("Body:", body);
     const response = await InstanceAxios.post(ApiUrl.GET_RESERVATIONS, body);
     return response.data;
   } catch (error) {

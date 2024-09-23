@@ -9,6 +9,7 @@ const MyFlights = () => {
   const { reservations, loading, error } = useSelector(
     (state: RootState) => state.reservations
   );
+  console.log("Reservations: ", reservations);
 
   useEffect(() => {
     dispatch(fetchReservationsThunk());
@@ -51,11 +52,11 @@ const MyFlights = () => {
                       <strong>Flight Number:</strong> {reservation.flightNumber}
                     </p>
                     <p>
-                      <strong>Passenger Name:</strong>{" "}
+                      <strong>Passenger Name: </strong>
                       {reservation.passengerName}
                     </p>
                     <p>
-                      <strong>Date:</strong>{" "}
+                      <strong>Date: </strong>
                       {new Date(reservation.date).toLocaleDateString()}
                     </p>
                   </div>
