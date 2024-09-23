@@ -6,7 +6,7 @@ export default function ExtraServices() {
     <div className="flex flex-col gap-6 items-center">
       <div className="relative cursor-pointer hover:scale-105 transition-transform duration-300">
         <img
-          src="/assets/images/extraServicesImages/car-image.png"
+          src="/images/extraServicesImages/car-image.png"
           alt="image1"
           className="max-h-[250px] rounded-2xl"
         />
@@ -18,7 +18,7 @@ export default function ExtraServices() {
 
       <div className="relative cursor-pointer hover:scale-105 transition-transform duration-300">
         <img
-          src="/assets/images/extraServicesImages/hotel-image.png"
+          src="/images/extraServicesImages/hotel-image.png"
           alt="image2"
           className="max-h-[250px] rounded-2xl"
         />
@@ -30,7 +30,7 @@ export default function ExtraServices() {
 
       <div className="relative cursor-pointer hover:scale-105 transition-transform duration-300">
         <img
-          src="/assets/images/extraServicesImages/travel-package-image.png"
+          src="/images/extraServicesImages/travel-package-image.png"
           alt="image3"
           className="max-h-[250px] rounded-2xl"
         />

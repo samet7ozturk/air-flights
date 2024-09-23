@@ -28,7 +28,7 @@ const Home = () => {
             </div>
             <div className="flex items-center gap-1">
               <img
-                src="/assets/images/homePageImages/profile-image.png"
+                src="/images/homePageImages/profile-image.png"
                 alt="profile"
                 className="w-10 rounded-full"
               />
