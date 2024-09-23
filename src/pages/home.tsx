@@ -1,7 +1,6 @@
 import FlightBooking from "../components/FlightBooking";
 import { FaPlane, FaTag } from "react-icons/fa";
 import { FaEarthAmericas } from "react-icons/fa6";
-import { CgProfile } from "react-icons/cg";
 import TicketDetails from "../components/TicketDetails";
 import FilterOptions from "../components/FilterOptions";
 import ExtraServices from "../components/ExtraServices";
@@ -28,7 +27,11 @@ const Home = () => {
               <p>Discover</p>
             </div>
             <div className="flex items-center gap-1">
-              <CgProfile />
+              <img
+                src="/assets/images/homePageImages/profile-image.png"
+                alt="profile"
+                className="w-10 rounded-full"
+              />
               <Link to="/my-flights">
                 <p>My Tickets</p>
               </Link>
