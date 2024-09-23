@@ -1,13 +1,15 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
 import { Flight } from "../store/slices/flightsSlice";
 import Modal from "react-modal";
 import modalStyles from "../styles/modal";
 import { FaPlane, FaPlaneDeparture, FaPlaneArrival } from "react-icons/fa";
+import { bookFlightThunk } from "../store/thunks/reservationThunk";
 
 const TicketDetails = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const { flights, stopsFilter, sortOption, loading, error } = useSelector(
     (state: RootState) => state.flights
   );
@@ -28,23 +30,8 @@ const TicketDetails = () => {
     setIsModalOpen(false);
   };
 
-  const bookFlight = async (flightNumber: number) => {
-    const today = new Date().toISOString().split("T")[0];
-    const body = {
-      flightNumber,
-      passengerName: "Samet",
-      date: today,
-    };
-
-    try {
-      const response = await axios.post(
-        "http://localhost:5555/api/reservations",
-        body
-      );
-      console.log("Booking successful:", response.data);
-    } catch (error) {
-      console.error("Error booking flight:", error);
-    }
+  const bookFlight = (flightNumber: number) => {
+    dispatch(bookFlightThunk(flightNumber));
   };
 
   const filterFlights = flights.filter((flight) => {
