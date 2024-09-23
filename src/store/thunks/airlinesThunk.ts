@@ -11,13 +11,10 @@ export const fetchAirlinesThunk = (page: number = 0, sort: string = "") => {
     dispatch(fetchAirlinesStart());
     try {
       const data = await fetchAirlines(page, sort);
-      console.log("Fetched Airlines Data: ", data);
       dispatch(fetchAirlinesSuccess(data));
     } catch (error) {
       dispatch(
-        fetchAirlinesFailure(
-          "Havaalanı verilerini getirirken bir hata oluştu(Thunk)."
-        )
+        fetchAirlinesFailure("There was an error fetching airport data(Thunk)")
       );
     }
   };

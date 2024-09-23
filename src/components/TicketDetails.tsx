@@ -55,11 +55,12 @@ const TicketDetails = () => {
         price,
       };
       const data = await postReservations(req);
-      console.log("Booking successful:", data);
       dispatch(fetchReservationsSuccess([data]));
     } catch (error) {
       dispatch(
-        fetchReservationsFailure("Rezervasyon oluşturulurken bir hata oluştu.")
+        fetchReservationsFailure(
+          "An error occurred while creating the reservation"
+        )
       );
     }
     setAvailableFlights((prevFlights) =>

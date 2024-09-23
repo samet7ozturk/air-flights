@@ -7,10 +7,7 @@ import { fetchFlightsThunk } from "../store/thunks/flightsThunk";
 
 const FlightBooking = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { flights, loading, error } = useSelector(
-    (state: RootState) => state.flights
-  );
-  console.log("Flight Booking Component :", flights);
+  const { loading, error } = useSelector((state: RootState) => state.flights);
 
   const [selectedOption, setSelectedOption] = useState<
     "round-trip" | "one-way"

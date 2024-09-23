@@ -11,12 +11,11 @@ export const fetchReservationsThunk = () => {
     dispatch(fetchReservationsStart());
     try {
       const data = await fetchReservations();
-      console.log("Fetched Reservations Data: ", data);
       dispatch(fetchReservationsSuccess(data));
     } catch (error) {
       dispatch(
         fetchReservationsFailure(
-          "Rezervasyon verilerini getirirken bir hata oluştu."
+          "An error occurred while fetching the reservation data"
         )
       );
     }

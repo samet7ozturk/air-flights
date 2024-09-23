@@ -9,7 +9,6 @@ const MyFlights = () => {
   const { reservations, loading, error } = useSelector(
     (state: RootState) => state.reservations
   );
-  console.log("Reservations: ", reservations);
 
   useEffect(() => {
     dispatch(fetchReservationsThunk());

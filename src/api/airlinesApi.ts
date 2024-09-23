@@ -19,7 +19,6 @@ export const fetchAirlines = async (page: number = 0, sort: string = "") => {
     });
     return response.data.airlines;
   } catch (error) {
-    console.error("Error fetching airlines", error);
     throw error;
   }
 };
