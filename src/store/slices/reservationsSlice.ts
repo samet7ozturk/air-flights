@@ -4,7 +4,9 @@ interface Reservation {
   _id: string;
   flightNumber: number;
   passengerName: string;
-  date: string;
+  departureDate: string;
+  stops: string;
+  price: number;
 }
 
 interface ReservationsState {
