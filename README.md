@@ -18,6 +18,18 @@ Schiphol Havaalanı API'sini kullanarak uçuş bilgilerini ve rezervasyonların�
 
 **.env**: Ortam değişkenlerini içerir.
 
+## API Rotaları
+
+## Havayolu API
+- **GET /api/airlines**: Tüm havayolu şirketlerini getirir. Sorgu parametreleri olarak page ve sort kabul eder.
+- **GET /api/airlines/**:id Belirli bir havayolu şirketini IATA kodu ile getirir.
+## Uçuş API
+- **GET /api/flights**: Uçuş bilgilerini getirir. Sorgu parametreleri: page, includeDelays, sort, fromScheduleDate, toScheduleDate.
+## Rezervasyon API
+- **GET /api/reservations**: Tüm rezervasyonları getirir.
+- **POST /api/reservations**: Yeni bir rezervasyon oluşturur. Gövde (body) verisi olarak flightNumber, passengerName, stops, departureDate, price beklenir.
+- **DELETE /api/reservations/:id**: Belirli bir rezervasyonu siler.
+
 Kurulum için depoyu klonlayın ve bağımlılıkları yükleyin. .env dosyasını oluşturup MongoDB bağlantı URI'sini ve Schiphol API anahtarlarını ekleyin. MongoDB'nin yerel makinenizde çalıştığından emin olun ve uygulamayı başlatın.
 
 Uygulama, belirli rotalar üzerinden API isteklerini karşılar. Örneğin, /api/airlines rotası ile tüm havayolu bilgilerini alabilir, /api/flights rotası ile uçuş bilgilerine erişebilirsiniz. Rezervasyon işlemleri için /api/reservations rotası kullanılır.
