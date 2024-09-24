@@ -20,12 +20,12 @@ Schiphol Havaalanı API'sini kullanarak uçuş bilgilerini ve rezervasyonların�
 
 ## API Rotaları
 
-## Havayolu API
+### Havayolu API
 - **GET /api/airlines**: Tüm havayolu şirketlerini getirir. Sorgu parametreleri olarak page ve sort kabul eder.
 - **GET /api/airlines/**:id Belirli bir havayolu şirketini IATA kodu ile getirir.
-## Uçuş API
+### Uçuş API
 - **GET /api/flights**: Uçuş bilgilerini getirir. Sorgu parametreleri: page, includeDelays, sort, fromScheduleDate, toScheduleDate.
-## Rezervasyon API
+### Rezervasyon API
 - **GET /api/reservations**: Tüm rezervasyonları getirir.
 - **POST /api/reservations**: Yeni bir rezervasyon oluşturur. Gövde (body) verisi olarak flightNumber, passengerName, stops, departureDate, price beklenir.
 - **DELETE /api/reservations/:id**: Belirli bir rezervasyonu siler.
