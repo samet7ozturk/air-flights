@@ -11,6 +11,7 @@ import {
   fetchReservationsFailure,
   fetchReservationsSuccess,
 } from "../store/slices/reservationsSlice";
+import { toast, ToastContainer } from "react-toastify";
 
 const TicketDetails = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -56,6 +57,7 @@ const TicketDetails = () => {
       };
       const data = await postReservations(req);
       dispatch(fetchReservationsSuccess([data]));
+      toast.success("Reservation created successfully!");
     } catch (error) {
       dispatch(
         fetchReservationsFailure(
@@ -132,11 +134,12 @@ const TicketDetails = () => {
   }
 
   if (!flights || flights.length === 0) {
-    return <div>Havaalanı ve tarih seçin</div>;
+    return <div>Select airport and date</div>;
   }
 
   return (
     <div className="mb-6">
+      <ToastContainer position="top-center" autoClose={3000} />
       {sortedFlights.map((flight, index) => {
         const stopsCount = flight.route.destinations.length - 1;
         const stopText =

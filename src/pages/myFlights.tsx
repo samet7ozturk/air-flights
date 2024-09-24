@@ -4,6 +4,8 @@ import { AppDispatch, RootState } from "../store/store";
 import { fetchReservationsThunk } from "../store/thunks/reservationThunk";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { deleteReservation } from "../api/reservationApi";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MyFlights = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -14,13 +16,14 @@ const MyFlights = () => {
   console.log("Reservation :", reservations);
 
   const handleDeleteReservation = async (id: string) => {
-    console.log("id :", id);
-
+    toast.info("Deleting reservation...");
     try {
       await deleteReservation(id);
-      dispatch(fetchReservationsThunk());
+      await dispatch(fetchReservationsThunk());
+      toast.success("Reservation deleted successfully!");
     } catch (error) {
-      console.error("An error occurred while deleting the reservation", error);
+      toast.error("Failed to delete reservation!");
+      throw error;
     }
   };
 
@@ -38,6 +41,7 @@ const MyFlights = () => {
 
   return (
     <div className="flex flex-col items-center h-[100vh]">
+      <ToastContainer position="top-center" />
       <div className="w-[90%] py-6 flex gap-8 font-bold">
         <button className="border rounded-md px-4 py-2">Times</button>
         <button className="border rounded-md px-4 py-2">Stops</button>
