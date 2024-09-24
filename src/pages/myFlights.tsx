@@ -59,7 +59,10 @@ const MyFlights = () => {
           </div>
           {reservations.length > 0 ? (
             reservations.map((reservation) => (
-              <div key={reservation._id} className="w-full flex shadow-md">
+              <div
+                key={reservation._id}
+                className="w-full flex shadow-md animate-slider1"
+              >
                 <div className="bg-white border p-4 rounded-md w-full flex justify-between">
                   <div className="flex flex-col w-[90%] text-lg gap-4 py-2">
                     <div className="text-2xl">
