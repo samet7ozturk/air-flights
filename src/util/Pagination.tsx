@@ -19,7 +19,6 @@ const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <div className="flex justify-center mt-4">
-      {/* Geri butonu */}
       <button
         className={`px-3 py-1 mx-1 ${currentPage === 1 ? "opacity-50" : ""}`}
         disabled={currentPage === 1}
@@ -28,7 +27,6 @@ const Pagination: React.FC<PaginationProps> = ({
         Previous
       </button>
 
-      {/* İlk sayfa */}
       <button
         className={`px-3 py-1 mx-1 ${
           currentPage === 1 ? "bg-[#4a0097] text-white" : "bg-gray-200"
@@ -38,20 +36,16 @@ const Pagination: React.FC<PaginationProps> = ({
         1
       </button>
 
-      {/* Eğer 2'den fazla sayfa varsa ve ortada ise "..." göster */}
-      {currentPage > 3 && <span className="mx-2">...</span>}
+      {currentPage > 2 && <span className="mx-2">...</span>}
 
-      {/* Bulunduğu sayfa */}
       {currentPage > 1 && currentPage < totalPages && (
         <button className="px-3 py-1 mx-1 bg-[#4a0097] text-white">
           {currentPage}
         </button>
       )}
 
-      {/* Eğer son sayfa ile bulunduğu sayfa arasında fark varsa "..." göster */}
-      {currentPage < totalPages - 2 && <span className="mx-2">...</span>}
+      {currentPage < totalPages - 1 && <span className="mx-2">...</span>}
 
-      {/* Son sayfa */}
       {totalPages > 1 && (
         <button
           className={`px-3 py-1 mx-1 ${
@@ -65,7 +59,6 @@ const Pagination: React.FC<PaginationProps> = ({
         </button>
       )}
 
-      {/* İleri butonu */}
       <button
         className={`px-3 py-1 mx-1 ${
           currentPage === totalPages ? "opacity-50" : ""
