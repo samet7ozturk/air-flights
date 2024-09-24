@@ -6,6 +6,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { deleteReservation } from "../api/reservationApi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 const MyFlights = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -43,6 +44,9 @@ const MyFlights = () => {
     <div className="flex flex-col items-center h-[100vh]">
       <ToastContainer position="top-center" />
       <div className="w-[90%] py-6 flex gap-8 font-bold">
+        <Link to="/" className="border rounded-md px-4 py-2">
+          Home Page
+        </Link>
         <button className="border rounded-md px-4 py-2">Times</button>
         <button className="border rounded-md px-4 py-2">Stops</button>
         <button className="border rounded-md px-4 py-2">Airlines</button>
