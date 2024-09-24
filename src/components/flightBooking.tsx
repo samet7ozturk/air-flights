@@ -4,7 +4,7 @@ import { IoMdCalendar } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { fetchFlightsThunk } from "../store/thunks/flightsThunk";
-import Pagination from "../util/Pagination";
+import Pagination from "./Pagination";
 
 const FlightBooking = () => {
   const dispatch = useDispatch<AppDispatch>();
