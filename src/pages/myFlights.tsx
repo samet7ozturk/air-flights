@@ -14,7 +14,6 @@ const MyFlights = () => {
   const { reservations, loading, error } = useSelector(
     (state: RootState) => state.reservations
   );
-  console.log("Reservation :", reservations);
 
   const handleDeleteReservation = async (id: string) => {
     toast.info("Deleting reservation...");
@@ -53,7 +52,7 @@ const MyFlights = () => {
         <button className="border rounded-md px-4 py-2">Airports</button>
         <button className="border rounded-md px-4 py-2">Amenities</button>
       </div>
-      <div className="bg-[#e7dcff] w-full py-12 flex flex-col items-center h-full">
+      <div className="bg-[#e7dcff] w-full py-12 flex flex-col items-center h-full overflow-x-hidden">
         <div className="w-[90%] flex flex-col gap-6">
           <div className="flex">
             <p>Sort by:</p>
