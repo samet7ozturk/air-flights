@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaPlane, FaPlaneDeparture, FaPlaneArrival } from "react-icons/fa";
 import { IoMdCalendar } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,13 +13,26 @@ const FlightBooking = () => {
   const [selectedOption, setSelectedOption] = useState<
     "round-trip" | "one-way"
   >("round-trip");
-
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 10;
 
+  const today = new Date().toISOString().split("T")[0];
+
+  const [fromScheduleDate, setFromScheduleDate] = useState(today);
+  const [returnDate, setReturnDate] = useState(today);
+
+  useEffect(() => {
+    if (returnDate < fromScheduleDate) {
+      setReturnDate(fromScheduleDate);
+    }
+  }, [fromScheduleDate, returnDate]);
+
   const handleSearchFlights = () => {
+    const returnDateValue =
+      selectedOption === "round-trip" ? returnDate : undefined;
+
     dispatch(
-      fetchFlightsThunk(currentPage, false, fromScheduleDate, returnDate)
+      fetchFlightsThunk(currentPage, false, fromScheduleDate, returnDateValue)
     );
   };
 
@@ -27,14 +40,6 @@ const FlightBooking = () => {
     setCurrentPage(page);
     dispatch(fetchFlightsThunk(page, false, fromScheduleDate, returnDate));
   };
-
-  const [fromScheduleDate, setFromScheduleDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
-  const [returnDate, setReturnDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
-  const today = new Date().toISOString().split("T")[0];
 
   if (loading) {
     return <div>Loading...</div>;
@@ -110,7 +115,7 @@ const FlightBooking = () => {
             <input
               type="date"
               value={returnDate}
-              min={today}
+              min={selectedOption === "one-way" ? today : fromScheduleDate}
               onChange={(e) => setReturnDate(e.target.value)}
               disabled={selectedOption === "one-way"}
               className={`w-full rounded-r-full pl-10 py-2 border-2 border-[#e0e0e0] ${
