@@ -4,6 +4,7 @@ import { IoMdCalendar } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { fetchFlightsThunk } from "../store/thunks/flightsThunk";
+import Pagination from "../util/Pagination";
 
 const FlightBooking = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -13,6 +14,20 @@ const FlightBooking = () => {
     "round-trip" | "one-way"
   >("round-trip");
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 10;
+
+  const handleSearchFlights = () => {
+    dispatch(
+      fetchFlightsThunk(currentPage, false, fromScheduleDate, returnDate)
+    );
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    dispatch(fetchFlightsThunk(page, false, fromScheduleDate, returnDate));
+  };
+
   const [fromScheduleDate, setFromScheduleDate] = useState(
     new Date().toISOString().split("T")[0]
   );
@@ -20,11 +35,6 @@ const FlightBooking = () => {
     new Date().toISOString().split("T")[0]
   );
   const today = new Date().toISOString().split("T")[0];
-
-  const handleSearchFlights = () => {
-    const toDate = selectedOption === "one-way" ? "" : returnDate;
-    dispatch(fetchFlightsThunk(0, false, fromScheduleDate, toDate));
-  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -70,6 +80,7 @@ const FlightBooking = () => {
           <div className="relative w-full">
             <input
               type="text"
+              placeholder="From"
               className="w-full rounded-l-full pl-10 py-2 border-2 border-[#e0e0e0]"
             />
             <FaPlaneDeparture className="absolute top-1/2 transform -translate-y-1/2 left-2 text-[#4a0097] h-6 w-6" />
@@ -77,6 +88,7 @@ const FlightBooking = () => {
           <div className="relative w-full">
             <input
               type="text"
+              placeholder="To"
               className="w-full rounded-r-full pl-10 py-2 border-2 border-[#e0e0e0]"
             />
             <FaPlaneArrival className="absolute top-1/2 transform -translate-y-1/2 left-2 text-[#4a0097] h-6 w-6" />
@@ -123,6 +135,13 @@ const FlightBooking = () => {
         >
           Show flights
         </button>
+      </div>
+      <div className="flex justify-end">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );
