@@ -1,70 +1,87 @@
-# Getting Started with Create React App
+# Air Flights Reservation App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Proje Açıklaması
 
-## Available Scripts
+Bu proje, uçuş bilgilerini listeleyen ve rezervasyon yapma/kaldırma gibi işlemleri içeren bir web uygulamasıdır. Schiphol Havaalanı API'si kullanılarak uçuşlar hakkında veri alınmakta ve rezervasyon bilgileri bir MongoDB veritabanında saklanmaktadır. React, Redux Toolkit ve TypeScript gibi modern teknolojiler kullanılarak geliştirilmiştir.
 
-In the project directory, you can run:
+## İçerik Açıklamaları
 
-### `npm start`
+### `src/api/`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **airlinesApi.ts**: Havayolu bilgilerini almak için API çağrılarını içerir.
+- **apiUrl.ts**: Tüm API uç noktalarının tanımlandığı dosya.
+- **flightsApi.ts**: Uçuş bilgilerini almak için yapılan API isteklerini yönetir.
+- **instanceAxios.ts**: API istekleri için özel bir Axios örneği yaratır.
+- **reservationApi.ts**: Rezervasyon işlemleri için gerekli olan API isteklerini içerir (rezervasyon yapma, rezervasyonu silme vb.).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### `src/components/`
 
-### `npm test`
+- **ExtraServices.tsx**: Uçuş sırasında ekstra hizmet seçeneklerini görüntüleyen bileşen.
+- **FilterOptions.tsx**: Uçuş aramalarını filtreleme seçeneklerini içeren bileşen.
+- **FlightBooking.tsx**: Uçuş rezervasyonu yapmak için kullanılan bileşen.
+- **TicketDetails.tsx**: Uçuş biletlerinin detaylarını görüntüleyen bileşen.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `src/pages/`
 
-### `npm run build`
+- **Home.tsx**: Ana sayfa bileşeni. Uçuş arama ve bilet bilgileri burada görüntülenir.
+- **MyFlights.tsx**: Kullanıcının yaptığı rezervasyonları listeleyen ve silmesine olanak tanıyan sayfa.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `src/store/`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **slices/airlinesSlice.ts**: Redux Toolkit ile havayolu bilgilerini yönetmek için oluşturulan slice.
+- **slices/flightsSlice.ts**: Uçuş bilgilerini yöneten slice.
+- **slices/reservationsSlice.ts**: Kullanıcının rezervasyonlarını yöneten slice.
+- **thunks/airlinesThunk.ts**: Havayolu API isteklerini yöneten thunk.
+- **thunks/flightsThunk.ts**: Uçuş API isteklerini yöneten thunk.
+- **thunks/reservationThunk.ts**: Rezervasyon işlemleri için gerekli olan API isteklerini yöneten thunk.
+- **store.tsx**: Redux mağazasının tanımlandığı ve tüm slice'ların bağlandığı dosya.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `src/styles/`
 
-### `npm run eject`
+- **index.css**: Uygulamanın temel stillerini içerir.
+- **modal.ts**: Modal bileşeni için gerekli stiller ve animasyonlar.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Diğer Dosyalar
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **App.tsx**: Uygulamanın yönlendirme ve genel yapısını içeren ana dosya.
+- **index.tsx**: Uygulamanın başlatıldığı giriş dosyası.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Kullanılan Teknolojiler
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **React**: Kullanıcı arayüzünü oluşturmak için.
+- **Redux Toolkit**: Durum yönetimi için.
+- **TypeScript**: Tip güvenliğini sağlamak ve geliştirme sırasında hata ayıklamak için.
+- **Axios**: API isteklerini yapmak için.
+- **Schiphol Airport API**: Uçuş verilerini almak için kullanılan harici API.
+- **Toastify**: Kullanıcıya işlemler hakkında bildirimler vermek için.
+- **Tailwind CSS**: Uygulamanın stil ve düzenlerini oluşturmak için.
 
-## Learn More
+## Proje Kurulumu
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Bu projeyi çalıştırmak için aşağıdaki adımları takip edebilirsiniz:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. **Depoyu Klonlayın**:
 
-### Code Splitting
+   ```bash
+   git clone https://github.com/kullaniciAdiniz/air-flights-reservation.git
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. **Gerekli Bağımlılıkları Kurun**:
 
-### Analyzing the Bundle Size
+   ```bash
+   npm install
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+3. **Çevresel Değişkenleri Ayarlayın**:
+   `.env` dosyasını oluşturup gerekli API anahtarlarını ve bağlantı noktalarını girin.
 
-### Making a Progressive Web App
+4. **Projeyi Başlatın**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+   ```bash
+   npm start
+   ```
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+5. **Yapıyı Derleyin**:
+   ```bash
+   npm run build
+   ```
